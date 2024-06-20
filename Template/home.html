@@ -1,0 +1,19 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+    {% load static %}
+
+{% block title %}
+Home - My Website
+{% endblock %}
+
+{% block content %}
+  <div class="image-transition">
+      <img class="transition-image" style="height:400px" src="{% static 'images/image3.jpg' %}" alt="Transition Image">
+      <img class="transition-image" style="height:400px" src="{% static 'images/image5.jpeg' %}" alt="Transition Image">
+  </div>
+ <div class="image-transition">
+      <img class="transition-image" style="height:400px" src="{% static 'images/image6.jpeg' %}" alt="Transition Image">
+      <img class="transition-image" style="height:400px" src="{% static 'images/image7.jpeg' %}" alt="Transition Image">
+  </div>
+<!--<p>This is the home page content.</p>-->
+{% endblock %}
