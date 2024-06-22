@@ -1,10 +1,5 @@
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth import get_user
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-from .models import Post
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import redirect
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User
@@ -13,25 +8,30 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.mail import send_mail
-from django.urls import reverse
+import logging
+
+logger = logging.getLogger(__name__)
 
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
-            login(request, user)  # Log in the user
+            login(request, user)
             try:
                 send_mail(
                     "Login Alert",
                     "You have just logged into your account.",
+                    "Business Purpose Email",
                     [user.email],
                     fail_silently=False,
                 )
             except Exception as e:
-                print(f"Failed to send email: {e}")  # Log the exception or handle it appropriately
+                logger.error(f"Failed to send email to {user.email}: {e}")
 
             return redirect('dashboard')
+        else:
+            logger.debug(f"Form errors: {form.errors}")
     else:
         form = AuthenticationForm()
 
@@ -83,8 +83,11 @@ def signup_view(request):
 
 
 def dashboard_view(request):
+    users = User.objects.all()
+    print(users)
     if request.user.is_authenticated:
-        username = request.user.username
+        username = f"{request.user.first_name} {request.user.last_name}".strip()
+        print(username)
     else:
         username = ''
 
@@ -93,6 +96,7 @@ def dashboard_view(request):
 
 def logout_view(request):
     logout(request)
+    deactivate_inactive_users.apply_async(countdown=60)
     return redirect('login')  # Replace 'home' with your desired redirect URL after logout
 
 
