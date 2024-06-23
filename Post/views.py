@@ -38,26 +38,6 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 
-
-
-
-# def login_view(request):
-#     if request.method == 'POST':
-#         form = AuthenticationForm(request, request.POST)
-#         if form.is_valid():
-#             user = form.get_user()
-#             send_mail(
-#                 "Login Alert",
-#                 "You have just Logged into Your Account ",
-#                 "Business Purpose",
-#                 [user.email],
-#                 fail_silently=False,
-#             )
-#             return redirect('dashboard')
-#     else:
-#         form = AuthenticationForm()
-#     return render(request, 'login.html', {'form': form})
-
 def signup_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -79,9 +59,7 @@ def signup_view(request):
     return render(request, 'signup.html', {'form': form})
 
 
-
-
-
+@login_required(login_url='login')
 def dashboard_view(request):
     users = User.objects.all()
     print(users)
