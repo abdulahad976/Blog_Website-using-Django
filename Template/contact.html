@@ -1,11 +1,23 @@
-<!-- templates/home.html -->
 {% extends 'base.html' %}
+    {%load static%}
 
 {% block title %}
-Home - My Website
+Contact - My Website
+{% endblock %}
+
+{% block head %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        /* Additional styles specific to contact page */
+    </style>
 {% endblock %}
 
 {% block content %}
-<h1 class="list">Welcome to my Contact Page</h1>
-<!--<p>This is the home page content.</p>-->
+    <h1>Welcome to my Contact Page</h1>
+    <!-- Contact form or content -->
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Additional scripts specific to contact page -->
 {% endblock %}

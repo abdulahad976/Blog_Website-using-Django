@@ -43,11 +43,13 @@ def send_deactivation_email(email):
 def inactive_users():
     inActiveUsers = User.objects.filter(is_active=False)
     for user in inActiveUsers:
+        user.is_active = True
+        user.save()
         send_reactivation_email.delay(user.email)
 
 @shared_task()
 def send_reactivation_email(email):
-    subject = 'You can still Reactivate you Account'
+    subject = 'You account has been Reactivated Successfully'
     message = 'Your account has been deactivated due to inactivity.'
     from_email = 'Account Reactivation'
     recipient_list = [email]

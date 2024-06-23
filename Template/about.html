@@ -1,13 +1,27 @@
 {% extends 'base.html' %}
+    {% load static %}
 
 {% block title %}
 About - My Website
 {% endblock %}
 
+{% block head %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        /* Additional styles specific to about page */
+    </style>
+{% endblock %}
+    {% load static %}
+
 {% block content %}
-<h1 class="list">Welcome to the About Page</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid atque,
-    commodi distinctio dolorum error, ex facere hic ipsam ipsum, labore
-    natus nemo numquam officia sequi similique velit voluptate! Possimus?
-</p>
+    <h1>Welcome to the About Page</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aliquid atque,
+        commodi distinctio dolorum error, ex facere hic ipsam ipsum, labore
+        natus nemo numquam officia sequi similique velit voluptate! Possimus?
+    </p>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Additional scripts specific to about page -->
 {% endblock %}

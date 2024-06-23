@@ -96,7 +96,6 @@ def dashboard_view(request):
 
 def logout_view(request):
     logout(request)
-    deactivate_inactive_users.apply_async(countdown=60)
     return redirect('login')  # Replace 'home' with your desired redirect URL after logout
 
 

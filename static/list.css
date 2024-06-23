@@ -146,3 +146,24 @@ img{
     height: auto; /* Maintain aspect ratio */
     margin: 5px; /* Adjust spacing between images if needed */
 }
+.hero {
+    background-image: url('{% static 'images/hero.jpg' %}');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.blog-post {
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: #343a40;
+    color: white;
+    padding: 20px 0;
+}

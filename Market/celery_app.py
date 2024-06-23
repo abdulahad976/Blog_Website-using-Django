@@ -12,10 +12,10 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    'deactivate_inactive_users': {
-        'task': 'Post.tasks.deactivate_inactive_users',
-        'schedule': crontab(minute='*/1'),  # Runs every minute
-    },
+    # 'deactivate_inactive_users': {
+    #     'task': 'Post.tasks.deactivate_inactive_users',
+    #     'schedule': crontab(minute='*/1'),  # Runs every minute
+    # },
     'inactive_users': {
         'task': 'Post.tasks.inactive_users',
         'schedule': crontab(minute='*/1'),

@@ -1,106 +1,186 @@
 <!doctype html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Dashboard{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>{% block title %}My Website{% endblock %}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body, ul, li, a {
+        body {
             margin: 0;
-            padding: 0;
-            list-style: none;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .header .navbar-brand {
+            color: #ffffff;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .header .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .header .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 20px;
+        }
+        .header .search-bar input {
+            width: 100%;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #ced4da;
+        }
+        .header .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        .header .user-menu .dropdown-toggle {
+            background: none;
+            border: none;
+            padding: 0;
             color: inherit;
         }
-        nav{
-        width:20%;
-        height:620px;
-        background-color: #50858e;
-       }
-        /* Navigation container */
-        nav ul {
-            display: flex;
-            flex-direction: column;
+        .header .user-menu .btn {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1rem; /* Increased font size */
+        }
+        .header .user-menu .btn .username {
+            font-size: 1.2rem; /* Increased font size for username */
+            margin-right: 40px; /* Adjusted margin to balance spacing */
+        }
+        .footer {
+            background-color: #343a40;
+            color: #adb5bd;
+            padding: 5px 20px; /* Decreased height */
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        nav.sidebar {
+            height: calc(100vh - 60px); /* Adjust according to header height */
+            background-color: #343a40;
+            position: fixed;
+            top: 60px; /* Adjust according to header height */
+            width: 250px;
+            padding-top: 20px;
+        }
+        nav.sidebar ul {
             padding: 0;
         }
-
-        /* Menu item */
-        nav ul li {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            transition: background-color 0.3s;
-            border : 0.5px solid red
+        nav.sidebar ul li {
+            list-style: none;
         }
-
-        /* Menu item hover effect */
-        nav ul li:hover {
-            background-color: #f0f0f0;
+        nav.sidebar ul li a {
+            display: block;
+            color: #adb5bd;
+            padding: 15px 20px;
+            text-decoration: none;
+            transition: background-color 0.2s, color 0.2s;
         }
-
-        /* Icon and text alignment */
-        nav ul li a {
-            display: flex;
-            align-items: center;
+        nav.sidebar ul li a:hover {
+            background-color: #495057;
+            color: #ffffff;
+        }
+        .content {
+            margin-left: 250px; /* Adjust according to sidebar width */
+            padding: 80px 20px 40px; /* Adjust according to header and footer heights */
+            background-color: #ffffff;
+            border-radius: 8px;
+            min-height: calc(100vh - 140px); /* Adjust according to header and footer heights */
+        }
+        .dropdown-menu a {
             color: #333;
-        }
-
-        /* Icon spacing */
-        nav ul li a i {
-            margin-right: 10px;
         }
     </style>
 </head>
 <body>
-<header style="display: flex;  color:green; justify-content: space-between; align-items: center; padding: 0 20px; margin: 0;">
-   <div></div>
-    <h3 style="margin: 0; color:black"> Welcome {{ username }}</h3>
-</header>
-<!--<aside style="width:200px">-->
-<!--    <a href="{% url 'home' %}" style="color: blue; text-decoration: none; ">Logout</a>-->
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="navbar-brand">
+                <img src="{% static 'images/blog.png' %}" alt="My Image">Blog Website
+        </a>
+        <div class="search-bar">
+            <input type="text" class="form-control" placeholder="Search...">
+        </div>
+        <div class="user-menu">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user-circle"></i>
+                    <span class="username">{{ username }}</span> <!-- Username always visible -->
+                </button>
+<!--                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">-->
+<!--                    <li><a class="dropdown-item" href="#">Profile</a></li>-->
+<!--                    <li><a class="dropdown-item" href="{% url 'home' %}">Logout</a></li>-->
+<!--                </ul>-->
+            </div>
+        </div>
+    </header>
 
- <nav>
-    <ul>
-        <li>
-            <a href="#">
-                <i class="fas fa-user"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-clipboard-check"></i>
-                <span>Profile</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-briefcase"></i>
-                <span>Opportunities</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-briefcase"></i>
-                <span>Contact Us</span>
-            </a>
-        </li>
-        <li>
-            <a href="{% url 'home' %}">
-                <i class="ni ni-atom text-red"></i>
-                <span>Logout</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-user"></i> Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-briefcase"></i> Opportunities
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-envelope"></i> Contact Us
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
 
+    <!-- Main content -->
+    <div class="content">
+        {% block content %}
+        <!-- Content will go here -->
+        {% endblock %}
+    </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 My Website. All rights reserved.</p>
+    </footer>
 
-    {% block content %}
-    <!-- Content will go here -->
-    {% endblock %}
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,13 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{% static 'auth.css' %}">
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block head %}
+<!--    <link rel="stylesheet" href="{% static 'auth.css' %}">-->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <style>
+        /* Additional styles for login page */
+        .login-container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
     <div class="login-container">
         <form method="post">
             {% csrf_token %}
@@ -16,7 +31,10 @@
             <button type="submit">Login</button>
         </form>
         <p>Not registered? <a href="{% url 'signup' %}">Click to register</a></p>
-
     </div>
-</body>
-</html>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Additional scripts specific to about page -->
+{% endblock %}
